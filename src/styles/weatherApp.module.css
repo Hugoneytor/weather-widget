@@ -1,0 +1,8 @@
+body{
+  background-color: blueviolet;
+}
+.weatherContainer{
+  width: 500px;
+  height: 500px;
+  margin: 70px auto;
+}

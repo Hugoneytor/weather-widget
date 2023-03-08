@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import WeatherForm from './WeatherForm'
+import Loading from './Loading'
+import WeatherMainInfo from './WeatherMainInfo';
+import styles from '../styles/weatherApp.module.css'
 
 const WeatherApp = () => {
 
   const [weather, setWeather] = useState(null);
+
+  console.log(styles)
 
   useEffect( () => {
     loadInfo();
@@ -26,23 +31,27 @@ const WeatherApp = () => {
   
       const resp =  await fetchApi.json();
 
-      setWeather(resp)
-    
-      console.log(resp)
-      
+      setTimeout(()=>{
+        setWeather(resp)
+      }, 1500)
+          
     } catch (error) {console.log(error)}
   }
 
   const handleChangeCity = ( city ) => {
     setWeather(null);
-    console.log('Hola')
     loadInfo(city);
   }
 
   return ( 
-    <div>
+    <div className={styles.weatherContainer}>
       <WeatherForm onChangeCity={handleChangeCity}/>
-      <div>{weather?.current.temp_c}</div>
+      { weather ? 
+        <WeatherMainInfo weather={weather}/> 
+        : 
+        <Loading />
+      }
+      
     </div>
   )
 }
